@@ -6,7 +6,7 @@ custAge INT NOT NULL,
 custGender VARCHAR(1),
 custContact VARCHAR(10),
 custAddress VARCHAR(255),
-custPassword VARCHAR() NOT NULL,
+custPassword VARCHAR(128) NOT NULL,
 
 PRIMARY KEY (custID, custContact)
 );
