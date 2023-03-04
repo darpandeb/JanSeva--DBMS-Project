@@ -11,9 +11,6 @@ app.get('/', function(req, res) {
 
 // customer //
 
-app.get('/customerlogin', function (req, res) {
-
-});
 // pilgrimage on query params //
 app.get("/pilgrimage", (req, res) => {
     var query = req.query;
