@@ -1,0 +1,6 @@
+.filters{
+    border: 2px solid white !important;
+    height: 500px;
+    background-color: white !important;
+    box-shadow: 2px 3px 10px rgb(57, 57, 63);
+}
