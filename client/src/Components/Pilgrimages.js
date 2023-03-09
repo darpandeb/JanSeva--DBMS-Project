@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import {Link } from 'react-router-dom';
 import '../styles/Pilgrimages.css';
+
+
+const now = new Date();
+const year = now.getFullYear();
 export default class Pilgrimages extends Component {
   render() {
     return (
@@ -26,13 +30,54 @@ export default class Pilgrimages extends Component {
                 </nav>
             {/* Filters */}
             <div className="container">
-                <div className="row px-3 py-5">
-                    <div className="col-12 col-sm-5 col-lg-4  filters rounded">
+                <div className="row  py-5">
+                    <div className="col-12 filters rounded">
                         <h3> Filters  Section</h3>
                         <p> prepare the backend first</p>
                     </div>
-                    </div>
+                  </div>
                 </div>
+
+              {/* cards */}
+              <div class="container">
+              <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3">
+                  <div class="col my-3">
+                      <div class="card h-100 my-3">
+                          <img src="..." class="card-img-top" alt="..."/>
+                          <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                          </div>
+                        </div>
+                  </div>
+                  <div class="col my-3">
+                      <div class="card h-100 mt-3">
+                          <img src="..." class="card-img-top" alt="..."/>
+                          <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content. Some more quick example text for the card's content.</p>
+                          </div>
+                        </div>
+                  </div>
+                  <div class="col my-3">
+                      <div class="card h-100 my-3">
+                          <img src="..." class="card-img-top" alt="..."/>
+                          <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">Some quick example text to make up the bulk of the card's content.</p>
+                          </div>
+                        </div>
+                  </div>
+              </div>
+          </div>
+           {/*Footer*/}
+           <div className="container-fluid ">
+                    <div className="row justify-content-center">
+                        <div className="col-5  col-md-3 col-lg-2">
+                            <h3 className="brand foot">JanSeva &copy; {year}</h3>
+                        </div>
+                    </div>
+            </div>
       </>
     )
   }

@@ -1,6 +1,12 @@
 .filters{
     border: 2px solid white !important;
-    height: 500px;
+    height: 100px;
     background-color: white !important;
     box-shadow: 2px 3px 10px rgb(57, 57, 63);
+}
+.cards
+{
+    height: 100px;
+    background-color: white !important;
+    margin-top: 1rem;
 }

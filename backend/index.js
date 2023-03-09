@@ -9,7 +9,7 @@ app.get('/', function(req, res) {
     res.end();
 });
 
-// customer //
+// pilgrimagess //
 
 // pilgrimage on query params //
 app.get("/pilgrimage", (req, res) => {
