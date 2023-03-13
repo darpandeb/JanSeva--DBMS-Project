@@ -62,8 +62,22 @@ INSERT INTO pilgrimage (pilgName,pilgLoc,pilgPin,pilgCity,pilgType,userExp,img1,
 ("Immaculate Conception Cathedral","204, Mission St, MG Road Area","605001","Puducherry", "church",4.4,"1JdxWRv/Puducherry-Immaculate-Conception-Cathedral-2.jpg","5MwN8KN/shutterstock-1015155727.jpg"),
 ("St. John in the Wilderness Church","McLeod Ganj","176215","Dharamshala","church",3.6,"KbsRGNc/Nainital-stjohnchurch.jpg","bNxVM2Q/14681027494-1995e5d393-b.jpg");
 -- masjid data
+INSERT INTO pilgrimage (pilgName, pilgLoc, pilgPin, pilgCity, pilgType, userExp, img1, img2) VALUES
+("Jama Masjid", "Meena Bazaar, Jama Masjid, Chandni Chowk", "110006", "New Delhi", "mosque", 4.5, "",""),
+("Charminar Mosque", "Charminar, Ghansi Bazaar", "500002", "Hyderabad", "mosque", 4.2, "", ""),
+("Taj-ul-Masjid", "Bhopal Railway Station Road, Kohefiza", "462001", "Bhopal", "mosque", 4.7, "", ""),
+("Haji Ali Dargah Mosque", "Dargah Road, Haji Ali", "400026", "Mumbai", "mosque", 4.4, "", "");
+-- gurudwara data
+INSERT INTO pilgrimage (pilgName, pilgLoc, pilgPin, pilgCity, pilgType, userExp, img1, img2) 
+VALUES 
+("Golden Temple", "Golden Temple Rd, Atta Mandi", "143006", "Amritsar", "gurudwara", 4.9, "",""),
+("Harmandir Sahib", "Sri Darbar Sahib, Guru Ram Das Ji Rd", "143006", "Amritsar", "gurudwara", 4.7, "",""),
+("Bangla Sahib Gurudwara", "Ashoka Rd, Connaught Place", "110001", "New Delhi", "gurudwara", 4.6, "",""),
+("Hazur Sahib Nanded", "Hazur Sahib Rd", "431601", "Nanded", "gurudwara", 4.3, "","");
+
+
 INSERT INTO pilgrimage (pilgName,pilgLoc,pilgPin,pilgCity,pilgType,userExp,img1,img2) VALUES 
-();
+("");
 Select * from pilgrimage;
 
 DELETE from pilgrimage where pilgID =12;
