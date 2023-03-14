@@ -3,6 +3,7 @@ import Home from "./Components/Home";
 import Landing from "./Components/Landing";
 import About from "./Components/About";
 import Pilgrimages from "./Components/Pilgrimages";
+import Packages from "./Components/Packages";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 
@@ -16,6 +17,7 @@ class App extends React.Component {
                 <Route path="/home" element={<Home/>} />
                 <Route path="/about" element={<About/>}/>
                 <Route path="/pilgrimage" element={<Pilgrimages/>}/>
+                <Route path="/pilgrimage/:id" element={<Packages/>}/>
             </Routes>
             </BrowserRouter>
         )

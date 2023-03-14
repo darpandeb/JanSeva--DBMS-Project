@@ -3,6 +3,10 @@ var app = express();
 var port = 8000;
 const mysql = require("./connection").con
 
+const cors = require('cors');
+app.use(cors({
+    origin: '*'
+}));
 // Landing api response //
 app.get('/', function(req, res) {
     res.send("<h1>JANSEVA BACKEND API !!!!</h1><h2>Pilgrimage Done </h2>");

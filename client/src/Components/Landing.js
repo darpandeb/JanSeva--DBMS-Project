@@ -1,7 +1,6 @@
 import React from "react";
 import { Outlet, Link } from "react-router-dom";
 import '../styles/Landing.css';
-
 const now = new Date();
 const year = now.getFullYear();
 class Landing extends React.Component {
@@ -55,6 +54,8 @@ project title which means “People’s service”.</p>
             </>
         )
     }
+
+   
 }
 
 export default Landing
