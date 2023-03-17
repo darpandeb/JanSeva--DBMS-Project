@@ -47,9 +47,58 @@ app.get("/pilgrimage/:Pilid", (req, res) => {
         }
     });
 });
+// priest//
+app.get("/priest", (req, res) => {
+    var query = req.query;
+    if(Object.keys(query).length ==0) // check length of query response //
+    {
+        var qry = "select * from priest";
+        
+    }
+    else{
+        var qry = "select * from priest where pilgID ="+req.query.pilID;
+    }
+    mysql.query(qry, (err, results) => {
+        if (err) throw err
+        else {
+            res.send(results);
+        }
+});
 
 
-// priest //
+// priest using pilg ID//
+app.get("/priest/:Pilid", (req, res) => {
+    var id = req.params.Pilid;
+    let qry = "select * from priest where pilgID =?";
+    mysql.query(qry,[id] ,(err, results) => {
+        if (err) throw err
+        else {
+            res.send(results);
+        }
+    });
+});
+});
+
+
+
+
+
+
+
+
+// user //
+
+app.get('/admin/users', (req,res)=>
+{
+    var qry = "select * from customer"
+    mysql.query(qry, (err, results) => {
+        if (err) throw err
+        else {
+            res.send(results);
+        }
+    });
+
+})
 
 
 // server listens at  //

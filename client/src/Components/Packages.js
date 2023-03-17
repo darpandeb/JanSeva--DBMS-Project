@@ -31,10 +31,10 @@ export default function Packages() {
                         </div>
                         <div className="carousel-inner">
                             <div className="carousel-item active">
-                            <img src={`https://i.ibb.co/${item.img2}`}  className="d-block  w-100 img-fluid" alt="..." height="200px"/>
+                            <img src={`https://i.ibb.co/${item.img2}`}  className="d-block  w-100 img-fluid" alt="..." height="200px" style={{"borderRadius":"5%"}}/>
                             </div>
                             <div className="carousel-item">
-                            <img src={`https://i.ibb.co/${item.img1}`}  className="d-block w-100 img-fluid" alt="..." height="200px"/>
+                            <img src={`https://i.ibb.co/${item.img1}`}  className="d-block w-100 img-fluid" alt="..." height="200px" style={{"borderRadius":"5%"}}/>
                             </div>
                         </div>
                         <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">

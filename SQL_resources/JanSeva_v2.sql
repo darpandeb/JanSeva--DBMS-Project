@@ -21,18 +21,25 @@ CHECK(custAge>18)
 
 DESC customer;
 
+INSERT INTO customer (custName, custAge, custGender, custEmail, custContact, custAddress, custPassword, custPin)
+VALUES
+    ('John Doe', 25, 'M', 'johndoe@example.com', '1234567890', '123 Main St', 'password123', '1234567'),
+    ('Jane Smith', 35, 'F', 'janesmith@example.com', '9876543210', '456 Oak Ave', 'pass123word', '7654321'),
+    ('Bob Johnson', 45, 'M', 'bjohnson@example.com', '5551112222', '789 Maple Ln', 'mysecretpassword', '4567890'),
+    ('Samantha Brown', 28, 'F', 'sbrown@example.com', '4445556666', '321 Pine Rd', 'password456', '2345678'),
+    ('Mark Lee', 22, 'M', 'mlee@example.com', '7778889999', '567 Elm St', '12345678', '3456789');
+
+select * from customer;
+
 CREATE TABLE package(packID int NOT NULL, 
 packName VARCHAR(255) NOT NULL, 
 packCost INT NOT NULL, 
-packRel VARCHAR(1), 
+pilgID INT,
 packContent VARCHAR(255), 
-packImg VARCHAR(255), 
 PRIMARY KEY (packID)
 );
 
 
-
-DROP TABLE pilgrimage;
 
 CREATE TABLE pilgrimage(
 pilgID int NOT NULL AUTO_INCREMENT,
@@ -75,18 +82,10 @@ VALUES
 ("Bangla Sahib Gurudwara", "Ashoka Rd, Connaught Place", "110001", "New Delhi", "gurudwara", 4.6, "Yhh1QS6/Front-view-of-Gurudwara-Bangla-Sahib-Delhi.jpg","hsgDMRz/Getty-Images-1154390020.jpg"),
 ("Hazur Sahib Nanded", "Hazur Sahib Rd", "431601", "Nanded", "gurudwara", 3.7, "8gwPCSp/Hazur-Sahib.jpg","9Gs14xc/nanded-gurudwara-1.jpg");
 
+SELECT * FROM pilgrimage;
 
-INSERT INTO pilgrimage (pilgName,pilgLoc,pilgPin,pilgCity,pilgType,userExp,img1,img2) VALUES 
-("");
-Select * from pilgrimage;
-
-DELETE from pilgrimage where pilgID =12;
-
-/*DROP table RITUAL;
-DROP TABLE priest;*/
-
-
-CREATE TABLE priest(priID int NOT NULL,
+CREATE TABLE priest(
+priID int NOT NULL AUTO_INCREMENT,
 priName VARCHAR(255) NOT NULL,
 priContact VARCHAR(10) NOT NULL UNIQUE,
 pilgID int,
@@ -94,6 +93,77 @@ pilgID int,
 PRIMARY KEY (priID),
 FOREIGN KEY (pilgID) REFERENCES pilgrimage(pilgID)
 );
+desc priest;
+insert into priest (priName,priContact,pilgID) values
+("Pandit Ravi Shankar","9876543210",1),
+("Acharya Rajendra Prasad","8765432109",1),
+("Swami Vivekananda","7654321098",1),
+("Pt. Harish Chandra","6543210987",1),
+("Brahmarshi Vishwamitra","5432109876",2),
+("Acharya Chanakya","4321098765",2),
+("Pt. Keshav Sharma","3210987654",2),
+("Swami Dayanand Saraswati","2109876543",2);
+
+insert into priest (priName,priContact,pilgID) values
+("Pt. Devi Lal","4875708097",3),
+("Shri Shankaracharya","9876543211",3),
+("Pt. Ramakrishna","8765432101",3),
+("Swami Ramdev","7654321091",3),
+("Pt. Govind Mishra","6543210981",4),
+("Acharya Bhikshu","5432109871",4),
+("Pt. Krishan Sharma","4321098761",4),
+("Swami Chinmayananda","3210987651",4),
+('Imam Ahmad Ali', '2420403064', 13),
+('Sheikh Mohammed Rahman', '9029468738', 13),
+('Maulana Abdul Qadir', '5553333090', 13),
+('Mufti Abdul Aziz', '5554444990', 13),
+('Imam Abdul Hamid', '9960442039', 14),
+('Hafiz Ahmed Khan', '555666612', 14),
+('Maulvi Ibrahim Khan', '555777790', 14),
+('Sheikh Mustafa Ahmed', '555888890', 14),
+('Mufti Abdul Rahman', '555999912', 15),
+('Qari Abdul Wali', '555000045', 15),
+('Hafiz Muhammad Ali', '3375524659', 15),
+('Maulana Khalid Hussain', '555222390', 15),
+('Sheikh Abdullah Hassan', '5553334', 16),
+('Imam Muhammad Usman', '5433967825', 16),
+('Mufti Muhammad Yusuf', '8432647265', 16),
+('Qari Abdul Qayyum', '9797864989', 16),
+('Father John Smith', '6333984868', 5),
+('Father Michael Johnson', '6434108881',  5),
+('Reverend James Brown', '55533332',  5),
+('Reverend William Davis', '55544443',  5),
+('Pastor Robert Wilson', '555555785', 6),
+('Pastor David Jones', '555666690', 6),
+('Father Mark Thomas', '555777734', 6),
+('Reverend Joseph Anderson', '55588881', 6),
+('Father Paul Mitchell', '9014546231',7),
+('Reverend Daniel Parker', '2119293191', 7),
+('Pastor Timothy Green', '8512958995', 7),
+('Father Christopher Lee', '6471081059', 7),
+('Reverend Matthew White', '3423653524', 8),
+('Pastor Benjamin Wright', '8694913365', 8),
+('Father Samuel King', '4345224055', 8),
+('Reverend Jonathan Baker', '55566677', 8),
+('Bhai Baldev Singh', '666111145', 17),
+('Bhai Gurdas Singh', '666222221', 17),
+('Giani Jaswant Singh', '666333312', 17),
+('Bhai Harbans Singh', '8232157483', 17),
+('Giani Sant Singh', '9718719652', 18),
+('Bhai Sukhdev Singh', '3678712970', 18),
+('Baba Seva Singh', '6413392692', 18),
+('Giani Jarnail Singh', '7399723689', 18),
+('Baba Surinder Singh', '9676444487', 19),
+('Giani Santokh Singh', '5540348403', 19),
+('Bhai Mohinder Singh', '6661112', 19),
+('Baba Nihal Singh', '66622235', 20),
+('Giani Gurbachan Singh', '6663334', 20),
+('Bhai Harjinder Singh', '66644453', 20),
+('Baba Joginder Singh', '666555612', 20);
+
+
+
+SELECT * from priest;
 DROP table payment;
 CREATE TABLE payment(
 payID INT NOT NULL, 
