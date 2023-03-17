@@ -24,7 +24,7 @@ export default class Pilgrimages extends Component {
                 <>
                     <div className="col my-3" key={item.pilgID} >
                       <div className="card h-100 my-3">
-                          <img src={`https://i.ibb.co/${item.img1}`} className="card-img-top h-100" alt="..." style={{"borderRadius":"50%"}}/>
+                          <img src={`https://i.ibb.co/${item.img1}`} className="card-img-top h-100" alt="..."/>
                           <div className="card-body">
                             <h5 className="card-title">{item.pilgName}</h5>
                             <p className="card-text"><i className="bi bi-geo-alt-fill"></i> {item.pilgLoc} , {item.pilgCity} ,{item.pilgPin}</p>
