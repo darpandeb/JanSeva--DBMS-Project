@@ -31,11 +31,12 @@ VALUES
 
 select * from customer;
 
-CREATE TABLE package(packID int NOT NULL, 
+CREATE TABLE package(packID int NOT NULL AUTO_INCREMENT, 
 packName VARCHAR(255) NOT NULL, 
 packCost INT NOT NULL, 
-pilgID INT,
+packRel VARCHAR(1), 
 packContent VARCHAR(255), 
+packImg VARCHAR(255), 
 PRIMARY KEY (packID)
 );
 
@@ -181,6 +182,115 @@ FOREIGN KEY (pilgID) REFERENCES pilgrimage(pilgID)
 );
 
 
-INSERT INTO pilgrimage values
-(),
+-- ===================MANDIRS==========================================
+-- kedarnath table
+INSERT INTO package (packID, packName, packCost, packContent, pilgID)
+VALUES 
+    ("Basic Puja Package", 500, "1 kg ghee, 1 kg rice, 10 incense sticks, 5 candles", 1),
+    ("Special Puja Package", 1000, "2 kg ghee, 2 kg rice, 20 incense sticks, 10 candles, 5 flower garlands", 1),
+    ("Deluxe Puja Package", 1500, "3 kg ghee, 3 kg rice, 30 incense sticks, 15 candles, 10 flower garlands, 1 brass diya", 1);
 
+-- kamakhya table
+INSERT INTO package (packID, packName, packCost, packContent, pilgID)
+VALUES 
+    ("Basic Puja Package", 300, "500 gm ghee, 500 gm rice, 5 incense sticks, 2 candles", 2),
+    ("Special Puja Package", 700, "1 kg ghee, 1 kg rice, 10 incense sticks, 5 candles, 3 flower garlands", 2),
+    ("Deluxe Puja Package", 1200, "2 kg ghee, 2 kg rice, 20 incense sticks, 10 candles, 5 flower garlands, 1 brass diya", 2);
+
+-- venkateshwara table
+INSERT INTO package (packID, packName, packCost, packContent, pilgID)
+VALUES 
+    ("Basic Puja Package", 200, "250 gm ghee, 250 gm rice, 2 incense sticks, 1 candle", 3),
+    ("Special Puja Package", 500, "500 gm ghee, 500 gm rice, 5 incense sticks, 2 candles, 2 flower garlands", 3),
+    ("Deluxe Puja Package", 1000, "1 kg ghee, 1 kg rice, 10 incense sticks, 5 candles, 5 flower garlands, 1 brass diya", 3);
+
+-- dwarkadhish table
+INSERT INTO package (packID, packName, packCost, packContent, pilgID)
+VALUES 
+    ("Basic Puja Package", 250, "500 gm ghee, 500 gm rice, 5 incense sticks, 2 candles", 4),
+    ("Special Puja Package", 600, "1 kg ghee, 1 kg rice, 10 incense sticks, 5 candles, 3 flower garlands", 4),
+    ("Deluxe Puja Package", 1100, "2 kg ghee, 2 kg rice, 20 incense sticks, 10 candles, 5 flower garlands, 1 brass diya", 4);
+
+-- ===================MASJIDS==========================================
+
+-- Insert packages for Jama Masjid pilgrimage
+INSERT INTO package (packID, packName, packCost, packContent, pilgID)
+VALUES 
+('Basic Prayer Kit', 50, 'Prayer mat, tasbih, miswak', 1),
+('Premium Prayer Kit', 100, 'Prayer mat, tasbih, miswak, Quran, prayer cap', 1),
+('Scented Candle Set', 25, '3 scented candles (rose, sandalwood, lavender)', 1);
+
+-- Insert packages for Charminar Mosque pilgrimage
+INSERT INTO package (packID, packName, packCost, packContent, pilgID)
+VALUES 
+('Basic Prayer Kit', 50, 'Prayer mat, tasbih, miswak', 2),
+('Premium Prayer Kit', 100, 'Prayer mat, tasbih, miswak, Quran, prayer cap', 2),
+('Incense Sticks Set', 30, 'Assorted incense sticks (jasmine, rose, sandalwood)', 2);
+
+-- Insert packages for Taj-ul-Masjid pilgrimage
+INSERT INTO package (packID, packName, packCost, packContent, pilgID)
+VALUES 
+('Basic Prayer Kit', 50, 'Prayer mat, tasbih, miswak', 3),
+('Premium Prayer Kit', 100, 'Prayer mat, tasbih, miswak, Quran, prayer cap', 3),
+('Flower Bouquet', 40, 'Assorted flowers (roses, marigolds, lilies)', 3);
+
+-- Insert packages for Haji Ali Dargah Mosque pilgrimage
+INSERT INTO package (packID, packName, packCost, packContent, pilgID)
+VALUES 
+('Basic Prayer Kit', 50, 'Prayer mat, tasbih, miswak', 4),
+('Premium Prayer Kit', 100, 'Prayer mat, tasbih, miswak, Quran, prayer cap', 4),
+('Ghee Lamp Set', 35, '2 brass ghee lamps with wicks', 4);
+
+-- ===================CHURCHES==========================================
+-- St. Paul's Cathedral
+INSERT INTO package(packID, packName, packCost, packContent, pilgID) VALUES 
+("Candle Package", 200, "2 candles, 1 candle stand", (SELECT pilgID FROM pilgrimage WHERE pilgName = "St. Paul's Cathedral")),
+("Flower Package", 150, "1 bouquet of roses, 1 bouquet of lilies", (SELECT pilgID FROM pilgrimage WHERE pilgName = "St. Paul's Cathedral")),
+("Incense Package", 100, "1 pack of incense sticks, 1 incense stand", (SELECT pilgID FROM pilgrimage WHERE pilgName = "St. Paul's Cathedral"));
+
+-- Basilica of Bom Jesus
+INSERT INTO package(packID, packName, packCost, packContent, pilgID) VALUES 
+("Ghee Package", 300, "500 grams of pure ghee", (SELECT pilgID FROM pilgrimage WHERE pilgName = "Basilica of Bom Jesus")),
+("Flower Package", 150, "1 bouquet of marigolds, 1 bouquet of chrysanthemums", (SELECT pilgID FROM pilgrimage WHERE pilgName = "Basilica of Bom Jesus")),
+("Candle Package", 200, "2 candles, 1 candle stand", (SELECT pilgID FROM pilgrimage WHERE pilgName = "Basilica of Bom Jesus"));
+
+-- Immaculate Conception Cathedral
+INSERT INTO package(packID, packName, packCost, packContent, pilgID) VALUES 
+("Incense Package", 100, "1 pack of incense sticks, 1 incense stand", (SELECT pilgID FROM pilgrimage WHERE pilgName = "Immaculate Conception Cathedral")),
+("Candle Package", 200, "2 candles, 1 candle stand", (SELECT pilgID FROM pilgrimage WHERE pilgName = "Immaculate Conception Cathedral")),
+("Flower Package", 150, "1 bouquet of orchids, 1 bouquet of daisies", (SELECT pilgID FROM pilgrimage WHERE pilgName = "Immaculate Conception Cathedral"));
+
+-- St. John in the Wilderness Church
+INSERT INTO package(packID, packName, packCost, packContent, pilgID) VALUES 
+("Flower Package", 150, "1 bouquet of carnations, 1 bouquet of tulips", (SELECT pilgID FROM pilgrimage WHERE pilgName = "St. John in the Wilderness Church")),
+("Candle Package", 200, "2 candles, 1 candle stand", (SELECT pilgID FROM pilgrimage WHERE pilgName = "St. John in the Wilderness Church")),
+("Incense Package", 100, "1 pack of incense sticks, 1 incense stand", (SELECT pilgID FROM pilgrimage WHERE pilgName = "St. John in the Wilderness Church"));
+
+-- ===================GURUDWARAS==========================================
+-- for the Golden Temple:
+INSERT INTO package (packName, packCost, packContent, pilgID)
+VALUES
+("Basic Package", 100, "2 candles, 1 packet of incense sticks, 1kg ghee", 1),
+("Premium Package", 500, "4 candles, 2 packets of incense sticks, 2kg ghee, 1kg almonds, 1kg raisins", 1),
+("Deluxe Package", 1000, "6 candles, 3 packets of incense sticks, 5kg ghee, 2kg almonds, 2kg raisins, 1kg cashews, 1kg pistachios", 1);
+
+-- for Harmandir Sahib:
+INSERT INTO package (packName, packCost, packContent, pilgID)
+VALUES
+("Basic Package", 100, "2 candles, 1 packet of incense sticks, 1kg ghee", 2),
+("Premium Package", 500, "4 candles, 2 packets of incense sticks, 2kg ghee, 1kg almonds, 1kg raisins", 2),
+("Deluxe Package", 1000, "6 candles, 3 packets of incense sticks, 5kg ghee, 2kg almonds, 2kg raisins, 1kg cashews, 1kg pistachios", 2);
+
+-- for Bangla Sahib Gurudwara:
+INSERT INTO package (packName, packCost, packContent, pilgID)
+VALUES
+("Basic Package", 100, "2 candles, 1 packet of incense sticks, 1kg ghee", 3),
+("Premium Package", 500, "4 candles, 2 packets of incense sticks, 2kg ghee, 1kg almonds, 1kg raisins", 3),
+("Deluxe Package", 1000, "6 candles, 3 packets of incense sticks, 5kg ghee, 2kg almonds, 2kg raisins, 1kg cashews, 1kg pistachios", 3);
+
+-- for Hazur Sahib Nanded:
+INSERT INTO package (packName, packCost, packContent, pilgID)
+VALUES
+("Basic Package", 100, "2 candles, 1 packet of incense sticks, 1kg ghee", 4),
+("Premium Package", 500, "4 candles, 2 packets of incense sticks, 2kg ghee, 1kg almonds, 1kg raisins", 4),
+("Deluxe Package", 1000, "6 candles, 3 packets of incense sticks, 5kg ghee, 2kg almonds, 2kg raisins, 1kg cashews, 1kg pistachios", 4);
