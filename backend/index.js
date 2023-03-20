@@ -66,6 +66,7 @@ app.get("/priest", (req, res) => {
 });
 
 
+
 // priest using pilg ID//
 app.get("/priest/:Pilid", (req, res) => {
     var id = req.params.Pilid;
@@ -77,6 +78,20 @@ app.get("/priest/:Pilid", (req, res) => {
         }
     });
 });
+});
+
+
+// package //
+
+app.get("/package/:Pilid", (req, res) => {
+    var id = req.params.Pilid;
+    let qry = "select * from package where pilgID =?";
+    mysql.query(qry,[id] ,(err, results) => {
+        if (err) throw err
+        else {
+            res.send(results);
+        }
+    });
 });
 
 

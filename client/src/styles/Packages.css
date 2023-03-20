@@ -1,0 +1,39 @@
+.packages
+{
+    display: flex;
+    flex-direction: column;
+    background-color: #FBFFB1;
+}
+.packages:hover{
+    background-color: #fbff01;
+}
+
+.button1 {
+	color: white;
+	background-color: rgb(26, 103, 225);
+	border: 5px solid transparent;
+	transition: .2s ease;
+	border-radius: 50px;
+}
+
+.button1:hover {
+	color: rgb(255, 255, 255);
+	background-color: rgb(181, 3, 9);
+	border: 7.5px solid rgb(181, 3, 9);
+}
+.card-link{
+    text-decoration: none;
+    color: black;
+}
+.price{
+    color: red;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    
+}
+.terms{
+    font-size: 12px;
+    font-weight: 200;
+    color: red;
+    margin-top: -10px;
+}

@@ -46,3 +46,18 @@
 {
     padding-top: 5rem;
 }
+.searchdata{
+    background-color: white;
+}
+.options{
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: black;
+    padding: 2rem;
+    font-family: 'Poppins', sans-serif;
+}
+.options:hover{
+    background-color: rgb(255, 238, 126);
+    color: rgb(137, 0, 0);
+}

@@ -10,3 +10,6 @@
     background-color: white !important;
     margin-top: 1rem;
 }
+.pilgcard:hover{
+    background-color: #FBFFB1;
+}

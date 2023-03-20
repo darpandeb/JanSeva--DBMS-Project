@@ -23,13 +23,13 @@ export default class Pilgrimages extends Component {
             return(
                 <>
                     <div className="col my-3" key={item.pilgID} >
-                      <div className="card h-100 my-3">
-                          <img src={`https://i.ibb.co/${item.img1}`} className="card-img-top h-100" alt="..." style={{"borderRadius":"50%"}}/>
+                      <div className="card h-100 my-3 pilgcard">
+                          <img src={`https://i.ibb.co/${item.img1}`} className="card-img-top h-100" alt="..." />
                           <div className="card-body">
                             <h5 className="card-title">{item.pilgName}</h5>
                             <p className="card-text"><i className="bi bi-geo-alt-fill"></i> {item.pilgLoc} , {item.pilgCity} ,{item.pilgPin}</p>
                             <p className="card-text"><button type="button" className="btn btn-primary"><i className="bi bi-house-door-fill"></i> {item.pilgType} </button>
-                             &nbsp; <button type="button" className="btn btn-warning text-light ">User Exp : {item.userExp} <i className="bi bi-star-fill"></i></button> &nbsp;</p>
+                             &nbsp; <button type="button" className="btn btn-success text-light ">User Exp : {item.userExp} <i className="bi bi-star-fill"></i></button> &nbsp;</p>
                             <Link to ={`/pilgrimage/${item.pilgID}`} key={item.pilgID} className="btn btn-danger">View</Link>
                           </div>
                         </div>

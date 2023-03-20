@@ -1,12 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
 import {Link} from 'react-router-dom'
 import '../styles/Home.css';
 
 const now = new Date();
 const year = now.getFullYear();
+const PilgrimageUrl = 'http://localhost:8000/pilgrimage';
+export default function Home() {
 
-class Home extends React.Component {
-    render(){
+
+    // const [pilgrimages , setPilg]=useState('');
+    const [input , setInput] = useState('');
+    const [pilgrimages , setPilg] = useState('');
+
+    const fetchData = (value) =>
+    {
+       fetch(PilgrimageUrl,{method:'GET'} )
+       .then((res) => res.json())
+       .then((data) => {
+            const searchdata = data.filter((item)=>{
+                return item && item.pilgName && item.pilgName.toLowerCase().includes(value);   
+             })
+             setPilg(searchdata);
+            
+       })
+
+    }
+
+    const handleChange = (value) => {
+        setInput(value)
+        fetchData(value)
+
+    }
+    const renderPilgs = (data) => {
+        if(data){
+            return data.map((item) => {
+                return(
+                    
+                    <Link to ={`/pilgrimage/${item.pilgID}`}key={item.pilgID} value={item.pilgID} className='options'>
+                        {item.pilgName} | {item.pilgLoc}
+                    </Link>
+                )
+            })
+        }
+    }
+    console.log(pilgrimages)
 
         return(
             <>
@@ -41,10 +78,14 @@ class Home extends React.Component {
                     </div>
                     <div className="row justify-content-center ">
                         <h3 className="brand col-12" style={{"fontSize":"40px","textAlign":"center"}}>Virtualising Pilgrimages</h3>
-                        <div className="col-10 col-sm-6  col-lg-5 d-flex">
+                        <div className="col-10 col-sm-6  col-lg-5 d-flex flex-column">
                             
-                            <input type="text" className="form-control rounded search " placeholder="Search your holy divine"/> 
-                            <button className="btn btn-primary search"><i class="bi bi-search"></i></button>
+                            <input type="text" onChange= {(e)=>handleChange(e.target.value)}  className="form-control rounded search" placeholder="Search your holy divine"/>
+                            <br/>
+                            <div className="searchdata">
+                            {renderPilgs(pilgrimages)}
+                                
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -129,6 +170,3 @@ class Home extends React.Component {
         )
 
     }
-}
-
-export default Home
