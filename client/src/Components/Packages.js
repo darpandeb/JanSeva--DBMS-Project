@@ -1,17 +1,21 @@
 import React, { useEffect, useState} from 'react';
-import {Link, useParams} from 'react-router-dom';
+import {Link, useParams, useNavigate} from 'react-router-dom';
+
+
 import '../styles/Packages.css';
 
 const now = new Date();
 const year = now.getFullYear(); 
-export default function Packages() {
+
+
+export default function Packages(props) {
+    const nav = useNavigate();
     const id = useParams()
-    console.log(id.id);
     let PilgrimageUrl='http://localhost:8000/pilgrimage/'+id.id;
     let PackageURL = 'http://localhost:8000/package/'+id.id 
-
     const [pilgrimages,setPilgrimages] = useState("")
     const [packages, setPackage] = useState("")
+
 
     useEffect(() =>
      {
@@ -26,14 +30,11 @@ export default function Packages() {
         .then((data) => {
             setPackage(data)
         })
-
-        
-
-      
-    
     }, [])
 
     const renderPilgrims = (data) => {
+        localStorage.setItem('pilgID',id.id);
+        console.log(localStorage.getItem('pilgID'));
         if(data){
         return data.map((item) => {
             return(
@@ -77,23 +78,28 @@ export default function Packages() {
     }
 }
 
+function handlechange(packid){
+    localStorage.setItem('packID',packid);
+    nav('/placeorder'); 
+}
+
 const renderpackages = (data) =>{
     if(data){
         return data.map((item) => {
             return(
                 <>
                         
-                        <div class="col">
-                            <Link class="card h-100 card-link">
+                        <div class="col" key={item.packID}>
+                            <div class="card h-100 card-link" key={item.packID}>
                             <div class="card-body packages">
                                 <h5 class="card-title">{item.packName}</h5>
                                 <p class="card-text"><b>Package Details</b> : {item.packContent}  </p>
                                 <h6 className='price'>Rs {item.packCost}</h6>
                                 <p className='terms'>*exclusive of other charges</p>
-                                <button class="btn btn-outline-primary mt-auto button1">Add Package</button>
+                                <button class="btn btn-outline-primary mt-auto button1"  value = {item.packID} onClick={(e)=>handlechange(e.target.value)}>Add Package</button>
                                 
+                              </div>
                             </div>
-                            </Link>
                         </div>
 
                 </>
@@ -102,7 +108,7 @@ const renderpackages = (data) =>{
     }
 }
 
-// console.log(useHistory());
+
 return (
     <>
             {/*Navigation*/}

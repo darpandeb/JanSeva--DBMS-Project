@@ -95,6 +95,13 @@ app.get("/package/:Pilid", (req, res) => {
 });
 
 
+// place order //
+
+app.get('/placeorder', (req, res) => {
+    const query = req.query;
+    
+    console.log(query);
+});
 
 
 
