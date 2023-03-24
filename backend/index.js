@@ -98,9 +98,15 @@ app.get("/package/:Pilid", (req, res) => {
 // place order //
 
 app.get('/placeorder', (req, res) => {
-    const query = req.query;
-    
-    console.log(query);
+    const pilgID = req.query.pilgID;
+    const packID = req.query.packID;
+    const qry = "SELECT pilgrimage.pilgName, pilgrimage.pilgLoc , pilgrimage.pilgCity, pilgrimage.pilgPin, pilgrimage.userExp , package.packName, package.packCost , package.packContent FROM package INNER JOIN pilgrimage ON package.pilgID=pilgrimage.pilgID where pilgrimage.pilgID = ? AND package.packID = ?"
+    mysql.query(qry,[pilgID,packID] ,(err, results) => {
+        if (err) throw err
+        else {
+            res.send(results);
+        }
+    });
 });
 
 

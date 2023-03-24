@@ -322,3 +322,12 @@ select * from pilgrimage;
 select * from priest;
 
 
+
+-- joining pilgrimage and package tablße for ordersummary page
+
+SELECT pilgrimage.pilgName, pilgrimage.pilgLoc , pilgrimage.userExp , package.packName, package.packCost , package.packContent
+FROM package
+INNER JOIN pilgrimage ON package.pilgID=pilgrimage.pilgID
+WHERE pilgrimage.pilgID = 1;
+
+
