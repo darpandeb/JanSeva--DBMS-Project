@@ -2,11 +2,25 @@ var express = require('express');
 var app = express();
 var port = 8000;
 const mysql = require("./connection").con
+require('dotenv').config();
 
+
+
+//body parser//
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended : true}));
+
+//stripe//
+const Stripe = require('stripe')(process.env.SECKRET_KET);
+
+//cors //
 const cors = require('cors');
 app.use(cors({
     origin: '*'
 }));
+
+
 // Landing api response //
 app.get('/', function(req, res) {
     res.send("<h1>JANSEVA BACKEND API !!!!</h1><h2>Pilgrimage Done </h2>");
@@ -109,8 +123,23 @@ app.get('/placeorder', (req, res) => {
     });
 });
 
+//payment //
 
+app.post('/payment', async(req, res) => {
+    let state , error;
+    const {token,amount}= req.body;
+    // console.log(token);
+    // console.log(amount);
+    if(token)
+    {
+        state ='success';
+    }
+    else{
+        state = 'error';
+    }
+    res.json({"status" : state});
 
+ });
 
 
 
@@ -127,6 +156,7 @@ app.get('/admin/users', (req,res)=>
     });
 
 })
+
 
 
 // server listens at  //

@@ -1,13 +1,26 @@
 import React, { Component, useEffect, useState } from 'react';
 import {Link } from 'react-router-dom';
 import '../styles/Placeorder.css';
+import StripeCheckout from 'react-stripe-checkout';
+import axios from 'axios';
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
+const MySwal = withReactContent(Swal)
+
+
+const order_id = Math.floor(Math.random()*100000);
+const total_amount=1200;
+    
+
+
 export default function Placeorder() {
   const packID = localStorage.getItem('packID');
   const pilgID = localStorage.getItem('pilgID');
   const url = `http://localhost:8000/placeorder?pilgID=${pilgID}&packID=${packID}`
   let imgurl ='https://i.ibb.co/60cQ7dv/Paytm-logo.png'
   const [ordersummary, setOrdersummary] = useState("")
-
+  
   useEffect(() =>
      {
         fetch(url,{method:'GET'} )
@@ -19,30 +32,10 @@ export default function Placeorder() {
   const renderSummary = (data) => {
     if(data){
       return data.map((item) => {
-          const total = 1200 + item.packCost;
+        total_amount = 1200 + item.packCost;
           return(
-            <div className='row justify-content-center'>
-            <div className='col-12 col-sm-10 col-md-10 ordrsummary orderback'>
-            
-                  <h1 className='ordersum' style={{"fontSize":"40px","color":"black"}}>ORDER SUMMARY &nbsp;<i class="bi bi-box2-heart-fill"></i></h1>
-                  <hr/>
-                  <p className='orderdesp'><span className='title'>Pilgrimage Name :</span> {item.pilgName} , {item.pilgLoc}, {item.pilgCity}, {item.pilgPin}</p>
-                  <p className='orderdesp'><span className='title'>Package Name :</span> {item.packName}</p>
-                  <p className='orderdesp' style={{"fontSize":"21px"}} ><span className='title'>Package Cost :</span> Rs {item.packCost}</p>
-
-                  
-
-                  <h2 className='ordersum' style={{"fontSize":"40px","color":"black",'paddingTop':'2rem'}}>Total Amount <i class="bi bi-currency-rupee"></i> </h2>
-                  <hr/>
-                  <p className='orderdesp'> Pilgrimage Charges :  Rs 500.00</p>
-                  <p className='orderdesp'> Priest Charges : Rs 500.00</p>
-                  <p className='orderdesp'> Package Charges : Rs {item.packCost}.00</p>
-                  <p className='orderdesp'> Service and Delivery Charges : Rs 200.00</p>
-                  <hr/>
-                  <p className='orderdesp'> Total : Rs {total}.00</p>
-
-
-                  <button className='btn btn-primary'>Pay</button>
+            <>
+                   
                   <hr/>
                   <h5 style={{'textAlign': 'center'}}>Payment's Partner</h5>
                   <div className='row justify-content-center'>
@@ -50,15 +43,49 @@ export default function Placeorder() {
                     <img className='img-fluid' src={imgurl} />
                     </div>
                   </div>
+                </>
                   
-
-                  
-            </div>
-            </div>
           )
         })
   }
 }
+const handleSuccess = () => {
+    MySwal.fire({
+      icon: 'success',
+      title: 'Payment was successful',
+      time: 4000,
+    });
+  };
+  const handleFailure = () => {
+    MySwal.fire({
+      icon: 'error',
+      title: 'Payment was not successful',
+      time: 4000,
+    });
+  };
+
+
+// posting the payment request // 
+const payNow = async token => {
+    try {
+      const response = await axios({
+        url: 'http://localhost:8000/payment',
+        method: 'post',
+        data: {
+          amount: total_amount ,
+          token,
+        },
+      });
+      if (response.data.status === 'success') {
+        handleSuccess();
+      }
+    } catch (error) {
+      handleFailure();
+      console.log(error);
+    }
+  };
+
+
   return (
     <>
       {/*Navigation*/}
@@ -81,11 +108,83 @@ export default function Placeorder() {
                 </div>
           </nav>
           {/*Payment*/}
-
-
-
           <div className='container my-5'>
-                  {renderSummary(ordersummary)}
+          <div className="panel panel-primary">
+                    <div className="panel-heading">
+                        Place Order
+                    </div>
+                    <div className="panel-body">
+                        <form >
+                        <div className="row">
+                            <div className="col-md-12">
+                            <div className="col-md-6">
+                                    <div className="form-group">
+                                        <label>OrderID</label>
+                                        <input className="form-control" name="id"
+                                        value='112233'/>
+                                    </div>
+                                </div>
+                                <div className="col-md-6">
+                                    <div className="form-group">
+                                        <label> Pilg Name</label>
+                                        <input className="form-control" name="name"
+                                        value="Kamakhya"/>
+                                    </div>
+                                </div>
+                                <div className="col-md-6">
+                                    <div className="form-group">
+                                        <label>Email</label>
+                                        <input className="form-control" name="email"
+                                        value="abc@gamil.com"/>
+                                    </div>
+                                </div>
+                                <div className="col-md-6">
+                                    <div className="form-group">
+                                        <label>Phone</label>
+                                        <input className="form-control" name="phone"
+                                        value="999776667"/>
+                                    </div>
+                                </div>
+                                <div className="col-md-6">
+                                    <div className="form-group">
+                                        <label>Address</label>
+                                        <input className="form-control" name="address"
+                                        value="abc some place"/>
+                                    </div>
+                                </div>
+                            </div>
+  
+                            <div className="row">
+                                <div className="col-md-12">
+                                    <h2>Total Cost </h2>
+                                    <div className="col-md-6">
+                                    <div className="form-group">
+                                        <input className="form-control" name="cost"
+                                        value='1200'/>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                            {/* <button className="btn btn-success"
+                            type="submit">
+                                Place order
+                            </button> */}
+                            
+                        </div>
+                        </form>
+
+                        <StripeCheckout
+                                stripeKey='pk_test_51MqgLVSG25tr98J4WPHHgCHrnNy8SCgWta9ozjZSqakWMJeKEKOKySaW2k8MNrizMwnd33hs5yu46APPmVlAjnbD00nbaoVhnS'
+                                label="Place Order"
+                                name = "Pay with cards"
+                                billingAddress
+                                shippingAddress
+                                amount={total_amount}
+                                description = {`Total amount: ${total_amount}`}
+                                token={payNow}
+                            />
+                    </div>
+                </div>
           </div>
 
 
