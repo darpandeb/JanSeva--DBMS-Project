@@ -1,10 +1,11 @@
 import React, { Component, useEffect, useState } from 'react';
-import {Link } from 'react-router-dom';
+import {Link ,useNavigate} from 'react-router-dom';
 import '../styles/Placeorder.css';
 import StripeCheckout from 'react-stripe-checkout';
 import axios from 'axios';
 import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
+import withReactContent from 'sweetalert2-react-content';
+import Navigation from './Navigation';
 
 const MySwal = withReactContent(Swal)
 
@@ -14,12 +15,16 @@ const total_amount=1200;
     
 
 
-export default function Placeorder() {
+export default function Placeorder() 
+{
   const packID = localStorage.getItem('packID');
   const pilgID = localStorage.getItem('pilgID');
-  const url = `http://localhost:8000/placeorder?pilgID=${pilgID}&packID=${packID}`
-  let imgurl ='https://i.ibb.co/60cQ7dv/Paytm-logo.png'
+  const ltkID = localStorage.getItem('ltk');
+  const url = `http://localhost:8000/placeorder?pilgID=${pilgID}&packID=${packID}`;
+  const userurl = `http://localhost:8000/userdata?custID=${ltkID}`
+  const nav = useNavigate();
   const [ordersummary, setOrdersummary] = useState("")
+  const [userdata,setUserdata] = useState("");
   
   useEffect(() =>
      {
@@ -28,31 +33,20 @@ export default function Placeorder() {
         .then((data) => {
           setOrdersummary(data)
         })
-     });
-  const renderSummary = (data) => {
-    if(data){
-      return data.map((item) => {
-        total_amount = 1200 + item.packCost;
-          return(
-            <>
-                   
-                  <hr/>
-                  <h5 style={{'textAlign': 'center'}}>Payment's Partner</h5>
-                  <div className='row justify-content-center'>
-                    <div className='col-2'>
-                    <img className='img-fluid' src={imgurl} />
-                    </div>
-                  </div>
-                </>
-                  
-          )
+
+          fetch(userurl,{method:'GET'} )
+          .then((res) => res.json())
+          .then((data) => {
+            setUserdata(data)
         })
-  }
-}
+},[]);
+
+
+
 const handleSuccess = () => {
     MySwal.fire({
       icon: 'success',
-      title: 'Payment was successful',
+      title: 'Payment was successful. Wait while we redirect you to home page',
       time: 4000,
     });
   };
@@ -72,12 +66,17 @@ const payNow = async token => {
         url: 'http://localhost:8000/payment',
         method: 'post',
         data: {
-          amount: total_amount ,
+          amount: total_amount,
           token,
+          orderdetails: ordersummary,
+
         },
       });
       if (response.data.status === 'success') {
         handleSuccess();
+        setTimeout(function () {
+           nav('/home')
+        },3000)
       }
     } catch (error) {
       handleFailure();
@@ -86,106 +85,108 @@ const payNow = async token => {
   };
 
 
+  console.log(ordersummary);
+  console.log(userdata);
+
+  var pilg = ordersummary.length > 0 ? ordersummary[0].pilgName : "";
+  var pack = ordersummary.length > 0 ? ordersummary[0].packName : "";
+  var email = userdata.length > 0 ? userdata[0].custEmail : "" ;
+  var phone = userdata.length > 0 ? userdata[0].custContact : "";
+  var address = userdata.length > 0 ? userdata[0].custAddress : "" ;
+  var amount = ordersummary.length > 0 ? ordersummary[0].packCost : "" ;
   return (
     <>
       {/*Navigation*/}
-      <nav className="navbar navbar-expand-lg">
-                <div className="container-fluid">
-                    <Link className="navbar-brand brand" to='/home'>Janseva</Link>
-                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-                    <i className="bi bi-list" style={{color:"white"}}></i>
-                    </button>
-                    <div className="collapse navbar-collapse" id="navbarScroll">
-                    <ul className="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style={{scrollHeight: "100px"}}>
-                        <li className="nav-item">
-                        <Link className="nav-link active brand" to="/pilgrimage" >Pilgrimages</Link>
-                        </li>
-                        <li className="nav-item">
-                        <Link className="nav-link brand" to="/about">About Us</Link>
-                        </li>
-                    </ul>
-                    </div>
-                </div>
-          </nav>
+      <Navigation/>
           {/*Payment*/}
           <div className='container my-5'>
-          <div className="panel panel-primary">
-                    <div className="panel-heading">
-                        Place Order
+                  <div className="panel panel-primary orderback">
+                    <div className="orderhead">
+                        Order Summary
                     </div>
                     <div className="panel-body">
                         <form >
-                        <div className="row">
+                        <div className="row justify-content-center">
+                            <div className="col-md-10">
                             <div className="col-md-12">
-                            <div className="col-md-6">
                                     <div className="form-group">
                                         <label>OrderID</label>
                                         <input className="form-control" name="id"
-                                        value='112233'/>
+                                        value={order_id} disabled muted/>
                                     </div>
                                 </div>
-                                <div className="col-md-6">
+                                <div className="col-md-12">
                                     <div className="form-group">
                                         <label> Pilg Name</label>
                                         <input className="form-control" name="name"
-                                        value="Kamakhya"/>
+                                        value={pilg} disabled/>
                                     </div>
                                 </div>
-                                <div className="col-md-6">
+                                <div className="col-md-12">
+                                    <div className="form-group">
+                                        <label> Package Name</label>
+                                        <input className="form-control" name="name"
+                                        value={pack} disabled/>
+                                    </div>
+                                </div>
+                                <div className="col-md-12">
                                     <div className="form-group">
                                         <label>Email</label>
                                         <input className="form-control" name="email"
-                                        value="abc@gamil.com"/>
+                                        value={email} disabled/>
                                     </div>
                                 </div>
-                                <div className="col-md-6">
+                                <div className="col-md-12">
                                     <div className="form-group">
                                         <label>Phone</label>
                                         <input className="form-control" name="phone"
-                                        value="999776667"/>
+                                        value={phone} disabled/>
                                     </div>
                                 </div>
-                                <div className="col-md-6">
+                                <div className="col-md-12">
                                     <div className="form-group">
                                         <label>Address</label>
                                         <input className="form-control" name="address"
-                                        value="abc some place"/>
+                                        value={address} disabled/>
                                     </div>
                                 </div>
                             </div>
   
                             <div className="row">
                                 <div className="col-md-12">
-                                    <h2>Total Cost </h2>
+                                    <h2 className='orderhead' style={{'marginTop':'2rem'}}>Total Cost <span style={{'fontSize':'20px'}}>(in Rs)</span> </h2>
                                     <div className="col-md-6">
                                     <div className="form-group">
-                                        <input className="form-control" name="cost"
-                                        value='1200'/>
+                                        <h5> Package Cost  <span style={{'float':'right'}}>Rs {amount}.00</span></h5>
+                                        <h5> Pilgrimage Cost  <span style={{'float':'right'}}>Rs 400.00</span></h5>
+                                        <h5> Priest Cost  <span style={{'float':'right'}}>Rs 1000.00</span></h5>
+                                        <h5> Convinience Charges  <span style={{'float':'right'}}>Rs 100.00</span></h5>
+                                        <hr/> 
+                                        <h5>Payable Total cost <span style={{'fontSize':'10px'}}>(inclusive of Taxes)</span>  <span style={{'float':'right'}}>Rs {amount+1500}.00</span></h5>
                                     </div>
                                 </div>
                                 </div>
                             </div>
-                            {/* <button className="btn btn-success"
-                            type="submit">
-                                Place order
-                            </button> */}
                             
                         </div>
                         </form>
-
-                        <StripeCheckout
+                        <div className='paybutton'>
+                        <StripeCheckout 
                                 stripeKey='pk_test_51MqgLVSG25tr98J4WPHHgCHrnNy8SCgWta9ozjZSqakWMJeKEKOKySaW2k8MNrizMwnd33hs5yu46APPmVlAjnbD00nbaoVhnS'
-                                label="Place Order"
+                                label="Confirm Order"
                                 name = "Pay with cards"
                                 billingAddress
                                 shippingAddress
-                                amount={total_amount}
-                                description = {`Total amount: ${total_amount}`}
+                                amount={amount}
+                                description = {`Total amount: ${amount+1500}`}
                                 token={payNow}
                             />
+                        </div>
+                        
                     </div>
                 </div>
           </div>
+          
 
 
     </>

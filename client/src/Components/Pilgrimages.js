@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Link } from 'react-router-dom';
 import '../styles/Pilgrimages.css';
+import Navigation from './Navigation';
 
 const PilgrimageUrl = 'http://localhost:8000/pilgrimage';
 
@@ -43,24 +44,7 @@ export default class Pilgrimages extends Component {
     return (
       <>
             {/*Navigation*/}
-            <nav className="navbar navbar-expand-lg">
-                <div className="container-fluid">
-                    <Link className="navbar-brand brand" to='/home'>Janseva</Link>
-                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-                    <i className="bi bi-list" style={{color:"white"}}></i>
-                    </button>
-                    <div className="collapse navbar-collapse" id="navbarScroll">
-                    <ul className="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style={{scrollHeight: "100px"}}>
-                        <li className="nav-item">
-                        <Link className="nav-link active brand" to="/pilgrimage" >Pilgrimages</Link>
-                        </li>
-                        <li className="nav-item">
-                        <Link className="nav-link brand" to="/about">About Us</Link>
-                        </li>
-                    </ul>
-                    </div>
-                </div>
-                </nav>
+                <Navigation/>
             {/* Filters */}
             <div className="container">
                 <div className="row  py-5">

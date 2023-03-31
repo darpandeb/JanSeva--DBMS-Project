@@ -11,7 +11,7 @@ class Landing extends React.Component {
                 {/*-----Navigation*------*/}
                 <nav class="navbar sticky-top navbar-light ">
                 <div class="container-fluid">
-                    <Link to="/" class="navbar-brand brand" >JanSeva</Link>
+                    <Link to="/home" class="navbar-brand brand" >JanSeva</Link>
                     <div class="topnav-right">
                         <Link class= " navbar-brand brand" to="/about">About Us</Link>
                     </div>
@@ -35,10 +35,10 @@ project title which means “People’s service”.</p>
                         </div>
                     <div className="row justify-content-center ">
                         <div className="col-auto">
-                            <button type="button" className="btn text-dark regbtn">Register</button>
+                            <Link type="button" className="btn text-dark regbtn" to='/register'>Register</Link>
                         </div>
                         <div className="col-auto">
-                            <button type="button" className="btn  text-light lgnbtn">Login</button>
+                            <Link type="button" className="btn  text-light lgnbtn" to='/login'>Login</Link>
                         </div>
                     </div>
                     </div>

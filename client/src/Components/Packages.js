@@ -1,6 +1,6 @@
 import React, { useEffect, useState} from 'react';
 import {Link, useParams, useNavigate} from 'react-router-dom';
-
+import Navigation from './Navigation';
 
 import '../styles/Packages.css';
 
@@ -15,7 +15,7 @@ export default function Packages(props) {
     let PackageURL = 'http://localhost:8000/package/'+id.id 
     const [pilgrimages,setPilgrimages] = useState("")
     const [packages, setPackage] = useState("")
-
+    const ltk = localStorage.getItem('ltk') ? localStorage.getItem('ltk') : null;
 
     useEffect(() =>
      {
@@ -80,7 +80,15 @@ export default function Packages(props) {
 
 function handlechange(packid){
     localStorage.setItem('packID',packid);
-    nav('/placeorder'); 
+    if(ltk!=null)
+    {
+        nav('/placeorder');
+    }
+    else
+    {
+        alert('Please login to place order');
+    }
+     
 }
 
 const renderpackages = (data) =>{
@@ -112,24 +120,7 @@ const renderpackages = (data) =>{
 return (
     <>
             {/*Navigation*/}
-            <nav className="navbar navbar-expand-lg">
-                <div className="container-fluid">
-                    <Link className="navbar-brand brand" to='/home'>Janseva</Link>
-                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-                    <i className="bi bi-list" style={{color:"white"}}></i>
-                    </button>
-                    <div className="collapse navbar-collapse" id="navbarScroll">
-                    <ul className="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style={{scrollHeight: "100px"}}>
-                        <li className="nav-item">
-                        <Link className="nav-link active brand" to="/pilgrimage" >Pilgrimages</Link>
-                        </li>
-                        <li className="nav-item">
-                        <Link className="nav-link brand" to="/about">About Us</Link>
-                        </li>
-                    </ul>
-                    </div>
-                </div>
-                </nav>
+            <Navigation/>
                 {/* Plgrimage details */}
                 <div className='container-fluid my-5'>
                     <div className='row justify-content-center'>

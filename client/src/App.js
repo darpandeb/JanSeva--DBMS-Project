@@ -5,6 +5,9 @@ import About from "./Components/About";
 import Pilgrimages from "./Components/Pilgrimages";
 import Packages from "./Components/Packages";
 import Placeorder from "./Components/Placeorder";
+import Login from "./Components/Login";
+import Register from "./Components/Register";
+
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 
@@ -15,11 +18,12 @@ class App extends React.Component {
             <BrowserRouter>
             <Routes>
                 <Route exact path="/" element={<Landing/>}/>
+                <Route path='/login' element={<Login />}/>
                 <Route path="/home" element={<Home/>} />
                 <Route path="/about" element={<About/>}/>
                 <Route path="/pilgrimage" element={<Pilgrimages/>}/>
                 <Route path="/pilgrimage/:id" element={<Packages/>}/>
-                <Route exact path="/placeorder" element={<Placeorder/>}/>
+                <Route path="/placeorder" element={<Placeorder/>}/>
             </Routes>
             </BrowserRouter>
         )

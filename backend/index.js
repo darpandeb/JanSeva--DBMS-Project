@@ -1,8 +1,11 @@
 var express = require('express');
 var app = express();
+var router = express.Router();
 var port = 8000;
 const mysql = require("./connection").con
 require('dotenv').config();
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcryptjs');
 
 
 
@@ -118,6 +121,7 @@ app.get('/placeorder', (req, res) => {
     mysql.query(qry,[pilgID,packID] ,(err, results) => {
         if (err) throw err
         else {
+            console.log('>>>>>>>>> order summary passeed to front end')
             res.send(results);
         }
     });
@@ -127,9 +131,8 @@ app.get('/placeorder', (req, res) => {
 
 app.post('/payment', async(req, res) => {
     let state , error;
-    const {token,amount}= req.body;
-    // console.log(token);
-    // console.log(amount);
+    const {token,amount, orderdetails}= req.body;
+    console.log(req.body);
     if(token)
     {
         state ='success';
@@ -142,6 +145,52 @@ app.post('/payment', async(req, res) => {
  });
 
 
+ // login //
+ app.post('/login',(req,res) => {
+    username = req.body.email;
+    const query = `select * from customer where custEmail = '${username}'`;
+    mysql.query(query, (err, user) => {
+        //console.log(user[0].custID);
+        console.log(`LOGIN MESSAGE ::  ${username} is logging in with ${req.body.password}`);
+        if(err) { return  res.status(500).send({auth:false,token:'Error while login'})}
+        if(user.length==0) {return  res.status(500).send({auth:false,token:'No user Found'})}
+        else{
+            if(req.body.password != user[0].custPassword)
+            {
+                return res.status(500).send({auth:false,token:'Invalid Password'})
+            }
+            else{
+                return res.send({auth:true,token:user[0].custID})
+            }
+           
+        }
+    });
+})
+app.get('/userInfo',(req,res) => {
+    const query = 'select * from customer where custID = ?';
+    var token = req.headers['x-access-token']
+    if(token=='null') {
+        console.log('>>null token');
+        return res.status(500).send({auth:false,token:'No Token Provided'})
+    }
+    //console.log(token);
+    mysql.query(query, [token],(err, user) => {
+        res.send({auth:true,token:user})
+    })
+   
+});
+
+app.get('/userdata' , (req, res) => {
+    //console.log(req.query);
+    var qry = `select * from customer where custID =${req.query.custID}`
+    mysql.query(qry, (err, results) => {
+        if (err) throw err
+        else {
+            console.log('>>>>>> userdata passed to frontend');
+            res.send(results);
+        }
+    });
+})
 
 // user //
 
