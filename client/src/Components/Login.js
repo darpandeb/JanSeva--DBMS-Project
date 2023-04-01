@@ -5,7 +5,24 @@ import '../styles/Login.css';
 
 const loginUrl = "http://localhost:8000/login";
 
-
+function validateEmailAndPassword(email, password) {
+    // Email regex pattern to match a valid email address
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
+    // Check if email and password are empty
+    if (!email || !password) {
+      return false;
+    }
+    
+    // Check if email is valid
+    if (!emailRegex.test(email)) {
+      return false;
+    }
+    
+    // If both email and password are valid, return true
+    return true;
+  }
+  
 export default function Login()
 {
     const nav = useNavigate();
@@ -16,32 +33,40 @@ export default function Login()
       });
 
     const handleSubmit = () => {
-        fetch(loginUrl,{
-            method:'POST',
-            headers:{
-                'accept':'application/json',
-                'Content-type':'application/json'
-            },
-            body:JSON.stringify(auth)
-        })
-
-        .then((res) => res.json())
-        .then((data) => {
-            if(data.auth ===  false){
-                // this.setState({message:data.token});
-                setAuth(existingValues => ({...existingValues,
-                    message:data.token,
-                }))
-            }else{
-                setAuth(existingValues => ({...existingValues,
-                    message:data.token,
-                }))
-                localStorage.setItem('ltk',data.token)
-                alert("Login success");
-                nav('/home');
-                // this.props.history.push('/')
-            }
-        })
+        if(validateEmailAndPassword(auth.email,auth.password))
+        {
+            fetch(loginUrl,{
+                method:'POST',
+                headers:{
+                    'accept':'application/json',
+                    'Content-type':'application/json'
+                },
+                body:JSON.stringify(auth)
+            })
+    
+            .then((res) => res.json())
+            .then((data) => {
+                if(data.auth ===  false){
+                    // this.setState({message:data.token});
+                    setAuth(existingValues => ({...existingValues,
+                        message:data.token,
+                    }))
+                }else{
+                    setAuth(existingValues => ({...existingValues,
+                        message:data.token,
+                    }))
+                    localStorage.setItem('ltk',data.token)
+                    alert("Login success");
+                    nav('/home');
+                    // this.props.history.push('/')
+                }
+            })
+        }
+        else
+        {
+            alert("Login failure due to invalid credentials. Try again!");
+        }
+        
     }
    
     const handleChange = (e) => {
@@ -60,7 +85,7 @@ export default function Login()
              {/*Navigation*/}
              <nav class="navbar navbar-expand-lg ">
                     <div class="container-fluid">
-                        <Link class="navbar-brand brand" >Janseva</Link>
+                        <Link class="navbar-brand brand" to='/home'>Janseva</Link>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="bi bi-list" style={{color:"white"}}></i>
                         </button>
@@ -102,9 +127,11 @@ export default function Login()
                             </div>
                             <div className="col-md-12 mt-5">
 
-                            <button className="btn btn-info" style={{'padding':'0.5rem 4rem 0.5rem 4rem'}} onClick={handleSubmit}>
+                            <button className="btn btn-warning" style={{'padding':'0.5rem 4rem 0.5rem 4rem'}} onClick={handleSubmit}>
                                 Login
                             </button>
+                            &nbsp;
+                            <Link to="/register" className="btn btn-primary py-2 px-5" >New User? Register</Link>
                             </div>
                             
                         </div>

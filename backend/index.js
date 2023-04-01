@@ -121,7 +121,6 @@ app.get('/placeorder', (req, res) => {
     mysql.query(qry,[pilgID,packID] ,(err, results) => {
         if (err) throw err
         else {
-            console.log('>>>>>>>>> order summary passeed to front end')
             res.send(results);
         }
     });
@@ -131,7 +130,7 @@ app.get('/placeorder', (req, res) => {
 
 app.post('/payment', async(req, res) => {
     let state , error;
-    const {token,amount, orderdetails}= req.body;
+    const {token,amount,orderdetails,orderid}= req.body;
     console.log(req.body);
     if(token)
     {
@@ -170,7 +169,7 @@ app.get('/userInfo',(req,res) => {
     const query = 'select * from customer where custID = ?';
     var token = req.headers['x-access-token']
     if(token=='null') {
-        console.log('>>null token');
+        //console.log('>>null token');
         return res.status(500).send({auth:false,token:'No Token Provided'})
     }
     //console.log(token);
@@ -186,12 +185,54 @@ app.get('/userdata' , (req, res) => {
     mysql.query(qry, (err, results) => {
         if (err) throw err
         else {
-            console.log('>>>>>> userdata passed to frontend');
+            //console.log('>>>>>> userdata passed to frontend');
             res.send(results);
         }
     });
 })
 
+//registration //
+
+app.post('/registration', (req, res) => {
+    //console.log('>>>>>> registration',req.body);
+    var {name,age,gender,email,phone,address,pin,password} = req.body;
+    const qry = 'SELECT * FROM customer WHERE custEmail = ? OR custContact = ?';
+    mysql.query(qry, [email,phone],(err,results)=>
+    {
+        if (err) 
+        {
+            throw err;
+        }
+        else 
+        {
+            if(results.length > 0)
+            {
+                res.send({auth:false,status:"User with such mail or phone number already exists"});
+            }
+            else{
+                const qry2 = 'INSERT INTO customer (custName, custAge, custGender, custEmail, custContact, custAddress, custPassword, custPin) VALUES (?,?,?,?,?,?,?,?)';
+                mysql.query(qry2, [name,age,gender,email,phone,address,password,pin],(err, results) => {
+                    if (err) throw err
+                    else {
+                        //console.log('>>>>>> userdata passed to frontend');
+                        //console.log(results);
+                        if(results.affectedRows=1)
+                        {
+                            res.send({auth:true,status:"Success"})
+                        }
+                        else{
+                            res.send({auth:false,status:"Database Error"})
+                        }
+                    }
+                });
+
+            }
+        }
+    });
+    
+
+
+})
 // user //
 
 app.get('/admin/users', (req,res)=>

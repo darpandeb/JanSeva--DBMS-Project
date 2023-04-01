@@ -89,7 +89,8 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Blogs */}
+      {/* <!-- BLOGS --> */}
+      
 
       <div className="container-fluid ">
         <div className="row justify-content-center">
