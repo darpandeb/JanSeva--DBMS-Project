@@ -71,9 +71,9 @@ export default function Navigation() {
               <div class="nav-item">
                 {userdata.custName ? (
                   <div>
-                    <button className="btn btn-light">
+                    <Link className="btn btn-light" to='/userprofile'>
                       Hi {userdata.custName} <i class="bi bi-person-circle"></i>
-                    </button> &nbsp; &nbsp;
+                    </Link> &nbsp; &nbsp;
                     <button onClick={handleLogout} className="btn btn-danger">
                       Logout <i class="bi bi-box-arrow-right"></i>
                     </button>

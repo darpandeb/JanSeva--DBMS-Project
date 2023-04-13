@@ -3,7 +3,7 @@ SHOW TABLES;
 
 
 
-DROP TABLE customer;
+
 
 CREATE TABLE customer(
 custID int NOT NULL AUTO_INCREMENT,
@@ -21,15 +21,16 @@ CHECK(custAge>18)
 
 DESC customer;
 
+
 INSERT INTO customer (custName, custAge, custGender, custEmail, custContact, custAddress, custPassword, custPin)
 VALUES
-    ('John Doe', 25, 'M', 'johndoe@example.com', '1234567890', '123 Main St', 'password123', '1234567'),
-    ('Jane Smith', 35, 'F', 'janesmith@example.com', '9876543210', '456 Oak Ave', 'pass123word', '7654321'),
-    ('Bob Johnson', 45, 'M', 'bjohnson@example.com', '5551112222', '789 Maple Ln', 'mysecretpassword', '4567890'),
-    ('Samantha Brown', 28, 'F', 'sbrown@example.com', '4445556666', '321 Pine Rd', 'password456', '2345678'),
-    ('Mark Lee', 22, 'M', 'mlee@example.com', '7778889999', '567 Elm St', '12345678', '3456789');
+    ('Test User', 25, 'M', 'test@gmail.com', '1234567890', '123 Main St', '12345', '781007');
 
 select * from customer;
+desc customer;
+
+INSERT INTO customer (custName, custAge, custGender, custEmail, custContact, custAddress, custPassword, custPin)
+VALUES ('TestUSer', 25, 'M', 'test@gmail.com', '1234567891', '123 Main St', '1234', '1234567');
 
 CREATE TABLE package(packID int NOT NULL AUTO_INCREMENT, 
 packName VARCHAR(255) NOT NULL, 
@@ -329,5 +330,31 @@ SELECT pilgrimage.pilgName, pilgrimage.pilgLoc , pilgrimage.userExp , package.pa
 FROM package
 INNER JOIN pilgrimage ON package.pilgID=pilgrimage.pilgID
 WHERE pilgrimage.pilgID = 1;
+
+
+-- order table 
+
+
+
+CREATE TABLE orders(
+orderID int,
+orderTime datetime,
+pilgName varchar(255),
+packName varchar(255),
+priName varchar(255) default '',
+custID int,
+amount float(2),
+orderStatus varchar(255), -- order placed , cancelled , priest allocated , divine in process , out for delivery , delivered 
+payID varchar(255),
+paymentstatus varchar(25), -- success / failed 
+PRIMARY KEY (orderID),
+FOREIGN KEY (custID) REFERENCES customer(custID)
+);
+
+desc orders;
+
+select * from orders order by orderTime ;
+drop table orders;
+
 
 

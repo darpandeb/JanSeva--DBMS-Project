@@ -7,9 +7,19 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import Navigation from "./Navigation";
 
+const now = new Date();
+const year = now.getFullYear();
+const month = now.getMonth();
+const day = now.getDate();
+
+
+const ordertime = `${year}-${month}-${day}`;
+
+
 const MySwal = withReactContent(Swal);
 
 const order_id = Math.floor(Math.random() * 100000);
+// const order_id = orderid.generate();
 
 export default function Placeorder() {
   const packID = localStorage.getItem("packID");
@@ -61,6 +71,8 @@ export default function Placeorder() {
           token,
           orderdetails: ordersummary,
           order_id: order_id,
+          timestamp : ordertime,
+          custID : ltkID,
         },
       });
       if (response.data.status === "success") {

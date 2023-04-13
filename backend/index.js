@@ -130,20 +130,43 @@ app.get('/placeorder', (req, res) => {
 
 app.post('/payment', async(req, res) => {
     let state , error;
-    const {token,amount,orderdetails,orderid}= req.body;
-    console.log(req.body);
+    const {amount,token,orderdetails,order_id, timestamp , custID}= req.body;
+    console.log(timestamp);
+    const qry = 'INSERT INTO orders (orderID, orderTime, pilgName,packName,custID,amount ,orderStatus,payID,paymentstatus) VALUES (?,?,?,?,?,?,?,?,?)'
     if(token)
     {
-        state ='success';
+        const orderstatus = 'order placed';
+        const state = 'success';
+        mysql.query(qry,[order_id,timestamp,orderdetails[0].pilgName,orderdetails[0].packName,custID,amount,orderstatus,token.id,state] ,(err, results) => {
+            if (err) throw err
+            else {
+                if(results.affectedRows=1)
+                        {
+                            res.json({"status" : state});
+                        }
+                else{
+                    res.json({"status" : 'payment error'});
+                }
+            }
+        });
+
     }
     else{
-        state = 'error';
+        res.json({"status" : 'error'});
     }
-    res.json({"status" : state});
-
+    
  });
 
+// view orders //
 
+app.get('/vieworders/:custID', (req, res) => {
+    const id = req.params.custID;
+    const qry = `SELECT * FROM orders WHERE custID = ${id} order by orderTime`;
+    mysql.query(qry,[id],(err, result) => {
+        res.send(result);
+    })
+
+})
  // login //
  app.post('/login',(req,res) => {
     username = req.body.email;
@@ -165,6 +188,7 @@ app.post('/payment', async(req, res) => {
         }
     });
 })
+// user info //
 app.get('/userInfo',(req,res) => {
     const query = 'select * from customer where custID = ?';
     var token = req.headers['x-access-token']
@@ -235,10 +259,12 @@ app.post('/registration', (req, res) => {
 })
 // user //
 
-app.get('/admin/users', (req,res)=>
+app.get('/userprofile/:id', (req,res)=>
 {
-    var qry = "select * from customer"
-    mysql.query(qry, (err, results) => {
+    const custID = req.params.id;
+    //console.log(custID);
+    var qry = "select * from customer where custID = ?";
+    mysql.query(qry, [custID],(err, results) => {
         if (err) throw err
         else {
             res.send(results);
