@@ -5,22 +5,37 @@ import '../styles/Login.css';
 
 const registerurl = 'http://localhost:8000/registration'
 
-function validateEmailAndPassword(name, age, gender, email, address,pin,password) {
+function validateEmailAndPassword(name, age, gender, email, address,pin,password,phone) {
   // Email regex pattern to match a valid email address
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   
-  // Check if email and password are empty
-  if (!email || !password || !name || !age || !gender || !address || !pin ) {
-    return false;
+
+  // empty values 
+  if (!email || !password || !name || !age || !gender || !address || !pin || !phone) {
+    return 'empty fields';
+  }
+  // number in  name check
+  if(/\d/.test(name))
+  {
+    return 'invalid name';
   }
   
   //Check if email is valid
   if (!emailRegex.test(email)) {
-    return false;
+    return 'invalid email';
+  }
+  // phone
+  if ((phone.length != 10)||(parseInt(phone)==NaN))
+  {
+    return 'invalid phone';
+  }
+  if((parseInt(age)<0 && parseInt(age)>100)||(parseInt(age)==NaN))
+  {
+    return 'invalid age';
   }
   
-  // If both email and password are valid, return true
-  return true;
+  // If all cases are valid then return success
+  return 'success';
 }
 
 export default function Register() {
@@ -40,7 +55,8 @@ export default function Register() {
 
 
     const handleSubmit = () => {
-      if(validateEmailAndPassword(auth.name,auth.age,auth.gender,auth.email,auth.address,auth.pin,auth.password)){
+      if(validateEmailAndPassword(auth.name,auth.age,auth.gender,auth.email,auth.address,auth.pin,auth.password,auth.phone)=='success')
+      {
       fetch(registerurl,{
           method:'POST',
           headers:{
@@ -68,9 +84,25 @@ export default function Register() {
           }
       })
     }
-    else
+    else if(validateEmailAndPassword(auth.name,auth.age,auth.gender,auth.email,auth.address,auth.pin,auth.password,auth.phone)=='empty fields')
     {
-        alert("Registration failure due to invalid credentials. Try again!");
+        alert("Registration failure! Looks like some fields were missing");
+    }
+    else if(validateEmailAndPassword(auth.name,auth.age,auth.gender,auth.email,auth.address,auth.pin,auth.password,auth.phone)=='invalid name')
+    {
+        alert("Registration failure! Name cannot have numbers");
+    }
+    else if (validateEmailAndPassword(auth.name,auth.age,auth.gender,auth.email,auth.address,auth.pin,auth.password,auth.phone)=='invalid email')
+    {
+        alert("Registration failure! Invalid Email.");
+    }
+    else if (validateEmailAndPassword(auth.name,auth.age,auth.gender,auth.email,auth.address,auth.pin,auth.password,auth.phone)=='invalid phone')
+    {
+        alert("Registration failure! Invalid Phone Number. Must be a 10 digit valid number.");
+    }
+    else if (validateEmailAndPassword(auth.name,auth.age,auth.gender,auth.email,auth.address,auth.pin,auth.password,auth.phone)=='invalid age')
+    {
+        alert("Registration failure! Invalid Age");
     }
   }
  
@@ -130,7 +162,9 @@ export default function Register() {
                                           <input className="form-check-input"  type="radio" id="male" name="gender" value='M'  onClick={handleChange} />
                                           &nbsp;<label htmlFor="male">Male</label> &nbsp;&nbsp;
                                           <input className="form-check-input" type="radio" id="female" name="gender" value='F' onClick={handleChange} />
-                                          &nbsp;<label htmlFor="female">Female</label>
+                                          &nbsp;<label htmlFor="female">Female</label>&nbsp;&nbsp;
+                                          <input className="form-check-input" type="radio" id="others" name="gender" value='O' onClick={handleChange} />
+                                          &nbsp;<label htmlFor="others">others</label>
                                     </div>
                                 </div>
                                 <div className="col-md-8">
@@ -151,7 +185,7 @@ export default function Register() {
                                     <div className="form-group">
                                         <label>Phone No</label>
                                         <input className="form-control" name="phone"
-                                        value={auth.phone} onChange={handleChange} type="number"/>
+                                        value={auth.phone} onChange={handleChange} type="text"/>
                                     </div>
                                 </div>
                                 <div className="col-md-8">

@@ -338,7 +338,7 @@ WHERE pilgrimage.pilgID = 1;
 
 CREATE TABLE orders(
 orderID int,
-orderTime datetime,
+orderDate date,
 pilgName varchar(255),
 packName varchar(255),
 priName varchar(255) default '',
@@ -353,8 +353,24 @@ FOREIGN KEY (custID) REFERENCES customer(custID)
 
 desc orders;
 
-select * from orders order by orderTime ;
+select * from orders order by orderDate desc;
 drop table orders;
+
+
+create table feedback(
+feedID int auto_increment primary key,
+feedContent varchar(500),
+orderID int,
+custID int,
+foreign key (orderID) references orders(orderID),
+foreign key (custID) references customer(custID)
+);
+
+select * from orders;
+
+
+-- Allocating priest in tracking order page //
+select priName from priest where pilgID IN (select pilgID from pilgrimage where pilgName = "Kamakhya Temple");
 
 
 

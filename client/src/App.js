@@ -9,7 +9,8 @@ import Login from "./Components/Login";
 import Register from "./Components/Register";
 import Userprofile from "./Components/Userprofile";
 import ViewOrders from "./Components/ViewOrders";
-
+import UpdateOrder from "./Components/UpdateOrder";
+import TrackOrder from "./Components/TrackOrder";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 
@@ -25,6 +26,8 @@ class App extends React.Component {
                 <Route path="/home" element={<Home/>} />
                 <Route path="/userprofile" element={<Userprofile/>} />
                 <Route path="/vieworders" element={<ViewOrders/>} />
+                <Route path="/updateorders" element={<UpdateOrder/>} />
+                <Route path='/trackorder/:id' element={<TrackOrder/>} />
                 <Route path="/about" element={<About/>}/>
                 <Route path="/pilgrimage" element={<Pilgrimages/>}/>
                 <Route path="/pilgrimage/:id" element={<Packages/>}/>

@@ -132,7 +132,7 @@ app.post('/payment', async(req, res) => {
     let state , error;
     const {amount,token,orderdetails,order_id, timestamp , custID}= req.body;
     console.log(timestamp);
-    const qry = 'INSERT INTO orders (orderID, orderTime, pilgName,packName,custID,amount ,orderStatus,payID,paymentstatus) VALUES (?,?,?,?,?,?,?,?,?)'
+    const qry = 'INSERT INTO orders (orderID, orderDate, pilgName,packName,custID,amount ,orderStatus,payID,paymentstatus) VALUES (?,?,?,?,?,?,?,?,?)'
     if(token)
     {
         const orderstatus = 'order placed';
@@ -161,10 +161,129 @@ app.post('/payment', async(req, res) => {
 
 app.get('/vieworders/:custID', (req, res) => {
     const id = req.params.custID;
-    const qry = `SELECT * FROM orders WHERE custID = ${id} order by orderTime`;
+    const qry = `SELECT * FROM orders WHERE custID = ${id} order by orderDate desc`;
     mysql.query(qry,[id],(err, result) => {
+        //console.log(result);
         res.send(result);
     })
+
+})
+// track orders // 
+app.get('/trackorders', (req, res) => {
+    const order = req.query.orderID;
+    //console.log(req.query);
+    const qry = `SELECT * FROM orders WHERE orderID = ${order}`;
+    mysql.query(qry,[order],(err, result) => {
+        //console.log(result);
+        res.send(result);
+    })
+
+});
+
+
+
+// admin  orders //
+app.get('/allorders', (req, res) => {
+    const id = req.params.custID;
+    const qry = `SELECT * FROM orders order by orderDate desc`;
+    mysql.query(qry,[id],(err, result) => {
+        //console.log(result);
+        res.send(result);
+    })
+
+});
+
+//admin update order//
+app.post('/update', (req, res) => {
+    const {id, status} = req.body;
+    //console.log(req.body);
+    const qry = 'UPDATE orders SET orderStatus =? WHERE orderID = ?';
+    mysql.query(qry,[status,id],(err, result) => {
+        if (err) throw err
+            else {
+                if(result.affectedRows=1)
+                        {
+                            console.log('>>>>orders status affected with',status)
+                            res.json({"auth" : 'success'});
+                        }
+                else{
+                    res.json({"auth" : 'error'});
+                }
+            }
+        });
+        
+    })
+// cancel orders //
+
+app.get('/cancel', function(req, res) {
+
+    const id = req.query.orderid;
+    const status = 'cancelled';
+    const qry = 'UPDATE orders SET orderStatus =? WHERE orderID = ?';
+    mysql.query(qry,[status,id],(err, result) => {
+        if (err) throw err
+            else {
+                if(result.affectedRows=1)
+                        {
+                            console.log('>>>>orders status affected with',status)
+                            res.json({"auth" : 'success'});
+                        }
+                else{
+                    res.json({"auth" : 'error'});
+                }
+            }
+        });
+        
+    });
+// allocate priest // 
+app.get('/priestAllocate', function(req, res){
+    const pilgname = req.query.pilgName;
+    //console.log(req.query);
+    const qry = 'select priName from priest where pilgID IN (select pilgID from pilgrimage where pilgName = ?)';
+    mysql.query(qry,[pilgname],(err, result) => {
+        if (err) throw err;
+        else
+        {
+            res.send(result);
+        }
+
+    })
+});
+// check if priest already exists //
+app.get('/priestexists', (req, res) => {
+    const orderid = req.query.orderID;
+    //console.log(orderid);
+    const qry='SELECT priName FROM orders WHERE orderID =?';
+    mysql.query(qry,[orderid],(err, result) => {
+        if (err) throw err;
+        else
+        {
+            //console.log(result);
+            res.json(result);
+        }
+    })
+});
+
+// update the priest in order tracking if doest not exists //
+
+app.get('/priestupdate',(req, res)=>{
+    const orderid = req.query.orderID;
+    const name = req.query.priName;
+    const qry = 'UPDATE orders SET priName =? WHERE orderID = ?'
+    mysql.query(qry,[name,orderid],(err, result) => {
+        if (err) throw err
+            else {
+                if(result.affectedRows=1)
+                        {
+                            console.log('>>>>priest updated with ',name)
+                            res.json({"auth" : 'success'});
+                        }
+                else{
+                    res.json({"auth" : 'error'});
+                }
+            }
+        });
+
 
 })
  // login //

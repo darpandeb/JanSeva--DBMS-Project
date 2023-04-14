@@ -1,34 +1,59 @@
 import React, { useEffect, useState } from 'react'
 import Navigation from './Navigation';
-
 import '../styles/ViewOrders.css';
+import { Link, useNavigate } from 'react-router-dom';
 
 const now = new Date();
 const year = now.getFullYear();
 const custID = localStorage.getItem('ltk');
-const viewOrdersurl = `http://localhost:8000/vieworders/${custID}`;
+const orderurl = `http://localhost:8000/vieworders/${custID}`;
 
 
 export default function ViewOrders() {
 
   const [orders, setOrders] = useState("");
+  const nav = useNavigate();
 
   useEffect(() =>
-     {
-        fetch(viewOrdersurl,{method:'GET'} )
-        .then((res) => res.json())
-        .then((data) => {
-            setOrders(data)
-        })
-    }, [])
+        {
+            fetch(orderurl,{method:'GET'} )
+            .then((res) => res.json())
+            .then((data) => {
+                setOrders(data);
+            })
+        }, [])
 
-    const handlecancel = () => {
+    function handleview(orderid, pilgName)
+    {
+
+        if(window.confirm("Tracking order for orderID " + orderid))
+        {
+            localStorage.setItem('orderpilgName', pilgName);            
+            nav(`/trackorder/${orderid}`)
+        }
+        
+        
+    }
+
+    function handlecancel(orderid) {
+        const cancelurl = `http://localhost:8000/cancel?orderid=${orderid}`
+        fetch(cancelurl,{method:'GET'} )
+            .then((res) => res.json())
+            .then((data) => {
+                if(data.auth=='success')
+                {
+                    alert("Order was successfully cancelled! Amount will be refunded soon to source bank!");
+                }
+                else{
+                    alert("Cancel request failed");
+                }
+            })
 
     }
 
     const renderorders = (data) =>{
         if(data.length > 0){
-            return data.map((item) => {
+            return data.map((item) => { 
                 return(
                 <>
                 <tr>
@@ -41,18 +66,21 @@ export default function ViewOrders() {
                     <td data-th="Pack Name">
                     {item.packName}
                     </td>
-                    <td data-th="Order Time">
-                    {item.orderTime}
+                    <td data-th="Order Date">
+                    {new Intl.DateTimeFormat('en-US',{month:'2-digit',day:'2-digit', year:'numeric'}).format(new Date(item.orderDate))}
                     </td>
-                    <td data-th="Order status">
+                    {item.orderStatus==='delivered' ? <td style={{'color':'green','fontWeight':'800'}}>Delivered</td> : <td data-th="Order status">
                     {item.orderStatus}
-                    </td>
+                    </td>}
                     <td data-th="Net Amount">
                     Rs {item.amount}
                     </td>
-                    <td><button className='btn btn-success'>View</button>&nbsp;
-                    <button className='btn btn-danger' onClick={handlecancel}>Cancel</button>
-                    </td>
+                    {(item.orderStatus==='delivered') ? (<td>
+                        <button className='btn btn-warning'>Feedback</button>
+                    </td>): (item.orderStatus==='cancelled')? (<td style={{'color':'red','fontWeight':'800'}}>Order cancelled</td>):(<td style={{'display':'flex'}}><button className='btn btn-success' onClick={e=>handleview(item.orderID,item.pilgName)}>Track</button>&nbsp;
+                    <button className='btn btn-danger'onClick={e=>handlecancel(item.orderID)}>Cancel</button>
+                    </td>)}
+                    
                 </tr>
                 </>
                 )

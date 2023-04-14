@@ -26,7 +26,7 @@ export default function Userprofile() {
             .then((res) => res.json())
             .then((data) => {
                 setUser(data)
-                console(user);
+                console.log('>>>>',user);
             })
         }, [])
 
@@ -54,22 +54,22 @@ export default function Userprofile() {
     <>
     <Navigation/>
     <div className="container" >
-        <section class="vh-100" style={{"backgroundColor": "#eee;"}}>
-        <div class="container py-5 h-100">
-            <div class="row d-flex justify-content-center align-items-center h-100">
+        <section className="vh-200" style={{"backgroundColor": "#eee;"}}>
+        <div className="container py-5 h-100">
+            <div className="row d-flex justify-content-center align-items-center h-100">
             
-            <div class="col-md-12 col-xl-4">
+            <div className="col-md-12 col-xl-4">
             
-                <div class="card" style={{"borderRadius": "15px"}}>
-                <div class="card-body text-center">
+                <div className="card" style={{"borderRadius": "15px"}}>
+                <div className="card-body text-center">
                 <h3>User Profile</h3>
-                    <div class="mt-3 mb-4">
+                    <div className="mt-3 mb-4">
                         {handleGender(Gender)}
                     </div>
-                    <p class="text-muted mb-4">ID : {userID}</p>
-                    <h4 class="mb-2"> {name}</h4>
-                    <div class="mb-4 pb-2">
-                    <p class="text-muted mb-4">Age : {Age} </p>
+                    <p className="text-muted mb-4">ID : {userID}</p>
+                    <h4 className="mb-2"> {name}</h4>
+                    <div className="mb-4 pb-2">
+                    <p className="text-muted mb-4">Age : {Age} </p>
                     <label for='email' style={{'float':'left'}}>Email </label>                   
                     <input type="email"  id='email' value ={email} className='form-control'/>
                     <label for='phone' className='mt-3' style={{'float':'left'}}>Contact No  </label> 

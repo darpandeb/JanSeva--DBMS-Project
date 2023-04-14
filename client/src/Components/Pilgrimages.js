@@ -47,10 +47,9 @@ export default class Pilgrimages extends Component {
                 <Navigation/>
             {/* Filters */}
             <div className="container">
-                <div className="row  py-5">
-                    <div className="col-12 filters rounded">
-                        <h3> Filters  Section</h3>
-                        <p style={{"color":"red"}}> !!!! Under Construction !!!!  </p>
+                <div className="row">
+                    <div className="col-12 rounded filters">
+                        <h3> Janseva Pigrimages Collection </h3>
                     </div>
                   </div>
                 </div>
