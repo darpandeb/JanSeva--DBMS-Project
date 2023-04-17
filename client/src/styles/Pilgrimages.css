@@ -10,5 +10,9 @@
     margin-top: 1rem;
 }
 .pilgcard:hover{
-    background-color: #FBFFB1;
+    background-color: #b1f5ff;
+    box-shadow: rgba(28, 198, 255, 0.199) -10px 10px, rgba(28, 168, 255, 0.19) -20px 20px ;
+    transition: 0.3s ease-in-out;
+    
 }
+

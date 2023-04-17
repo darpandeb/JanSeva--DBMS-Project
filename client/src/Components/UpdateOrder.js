@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 
 
@@ -79,7 +80,7 @@ const [orders, setOrders] = useState("");
 
   return (
     <>
-        <div class="container table-responsive py-5 tableback"> 
+        <div class="container table-responsive py-5 tableback text-center"> 
         <h2>Admin Order Update Panel</h2>
         <br/>
         <table class="table table-bordered table-hover">
@@ -98,6 +99,7 @@ const [orders, setOrders] = useState("");
         </tbody>
         
         </table>
+            <Link to="/admin" class="btn btn-outline-dark px-5">Back</Link>
         </div>
     </>
   )

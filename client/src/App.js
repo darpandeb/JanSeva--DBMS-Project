@@ -9,6 +9,7 @@ import Login from "./Components/Login";
 import Register from "./Components/Register";
 import Userprofile from "./Components/Userprofile";
 import ViewOrders from "./Components/ViewOrders";
+import Admin from "./Components/Admin";
 import UpdateOrder from "./Components/UpdateOrder";
 import TrackOrder from "./Components/TrackOrder";
 import Feedback from "./Components/Feedback";
@@ -28,6 +29,7 @@ class App extends React.Component {
                 <Route path="/userprofile" element={<Userprofile/>} />
                 <Route path="/vieworders" element={<ViewOrders/>} />
                 <Route path="/updateorders" element={<UpdateOrder/>} />
+                <Route path ="/admin" element={<Admin/>} />
                 <Route path='/trackorder/:id' element={<TrackOrder/>} />
                 <Route path='/addFeedback/:id' element={<Feedback/>} />
                 <Route path="/about" element={<About/>}/>

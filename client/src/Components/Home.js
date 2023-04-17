@@ -195,12 +195,12 @@ export default function Home() {
                 <h3 class="accordion-header">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-1">
                     <span class="num">1.</span>
-                    Non consectetur a erat nam at lectus urna duis?
+                    What is Janseva?
                   </button>
                 </h3>
                 <div id="faq-content-1" class="accordion-collapse collapse" data-bs-parent="#faqlist">
                   <div class="accordion-body">
-                    Feugiat pretium nibh ipsum consequat. Tempus iaculis urna id volutpat lacus laoreet non curabitur gravida. Venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non.
+                    Janseva is an attempt to make the process of visiting pilgrimages virtual. It is primarily focused to cater the physically disabled and old aged individuals.
                   </div>
                 </div>
               </div>
@@ -209,12 +209,12 @@ export default function Home() {
                 <h3 class="accordion-header">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-2">
                     <span class="num">2.</span>
-                    Feugiat scelerisque varius morbi enim nunc faucibus a pellentesque?
+                    Can only physically disabled and old people use Janseva?
                   </button>
                 </h3>
                 <div id="faq-content-2" class="accordion-collapse collapse" data-bs-parent="#faqlist">
                   <div class="accordion-body">
-                    Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum velit laoreet id donec ultrices. Fringilla phasellus faucibus scelerisque eleifend donec pretium. Est pellentesque elit ullamcorper dignissim. Mauris ultrices eros in cursus turpis massa tincidunt dui.
+                    As suggested by the name Janseva, this application can be utilised by anyone who seek the visiting experience of pilgrimage virtual.
                   </div>
                 </div>
               </div>
@@ -223,12 +223,12 @@ export default function Home() {
                 <h3 class="accordion-header">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-3">
                     <span class="num">3.</span>
-                    Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi?
+                    How is Janseva different from others?
                   </button>
                 </h3>
                 <div id="faq-content-3" class="accordion-collapse collapse" data-bs-parent="#faqlist">
                   <div class="accordion-body">
-                    Eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis orci. Faucibus pulvinar elementum integer enim. Sem nulla pharetra diam sit amet nisl suscipit. Rutrum tellus pellentesque eu tincidunt. Lectus urna duis convallis convallis tellus. Urna molestie at elementum eu facilisis sed odio morbi quis
+                    Janseva caters to all type of pilgrimages and has over huge networking for easy and efficient services.
                   </div>
                 </div>
               </div>
@@ -237,12 +237,12 @@ export default function Home() {
                 <h3 class="accordion-header">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-4">
                     <span class="num">4.</span>
-                    Ac odio tempor orci dapibus. Aliquam eleifend mi in nulla?
+                    How to book a package in Janseva?
                   </button>
                 </h3>
                 <div id="faq-content-4" class="accordion-collapse collapse" data-bs-parent="#faqlist">
                   <div class="accordion-body">
-                    Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum velit laoreet id donec ultrices. Fringilla phasellus faucibus scelerisque eleifend donec pretium. Est pellentesque elit ullamcorper dignissim. Mauris ultrices eros in cursus turpis massa tincidunt dui.
+                    Booking a package in Janseva is quite simple. Register yourself with us and search the pilgrimage of your desire and add package and book it.
                   </div>
                 </div>
               </div>
