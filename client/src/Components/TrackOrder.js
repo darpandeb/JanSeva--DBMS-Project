@@ -30,7 +30,7 @@ export default function TrackOrder() {
             .then((res) => res.json())
             .then((data) => {
                 console.log('>>from database prist name ',data);
-                if(data.length == 0)
+                if(data[0].priName === '')
                 {
                     fetch(priesturl,{method:'GET'})
                     .then((res) => res.json())
@@ -41,7 +41,7 @@ export default function TrackOrder() {
                         .then((res) => res.json())
                         .then((data2) => {
                             if(data2.auth=='success') {
-                                alert("Order Update! Priest has been allocated for your order!");
+                                //alert("Order Update! Priest has been allocated for your order!");
                                 setname(priestName);
                             };
                             

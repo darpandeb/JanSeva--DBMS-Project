@@ -11,6 +11,7 @@ import Userprofile from "./Components/Userprofile";
 import ViewOrders from "./Components/ViewOrders";
 import UpdateOrder from "./Components/UpdateOrder";
 import TrackOrder from "./Components/TrackOrder";
+import Feedback from "./Components/Feedback";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 
@@ -28,6 +29,7 @@ class App extends React.Component {
                 <Route path="/vieworders" element={<ViewOrders/>} />
                 <Route path="/updateorders" element={<UpdateOrder/>} />
                 <Route path='/trackorder/:id' element={<TrackOrder/>} />
+                <Route path='/addFeedback/:id' element={<Feedback/>} />
                 <Route path="/about" element={<About/>}/>
                 <Route path="/pilgrimage" element={<Pilgrimages/>}/>
                 <Route path="/pilgrimage/:id" element={<Packages/>}/>

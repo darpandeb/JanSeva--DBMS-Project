@@ -32,14 +32,6 @@ desc customer;
 INSERT INTO customer (custName, custAge, custGender, custEmail, custContact, custAddress, custPassword, custPin)
 VALUES ('TestUSer', 25, 'M', 'test@gmail.com', '1234567891', '123 Main St', '1234', '1234567');
 
-CREATE TABLE package(packID int NOT NULL AUTO_INCREMENT, 
-packName VARCHAR(255) NOT NULL, 
-packCost INT NOT NULL, 
-packRel VARCHAR(1), 
-packContent VARCHAR(255), 
-packImg VARCHAR(255), 
-PRIMARY KEY (packID)
-);
 
 
 
@@ -359,7 +351,7 @@ drop table orders;
 
 create table feedback(
 feedID int auto_increment primary key,
-feedContent varchar(500),
+feedContent varchar(1024),
 orderID int,
 custID int,
 foreign key (orderID) references orders(orderID),
@@ -367,10 +359,16 @@ foreign key (custID) references customer(custID)
 );
 
 select * from orders;
-
+update orders set orderStatus='order placed' where orderID=4029;
 
 -- Allocating priest in tracking order page //
 select priName from priest where pilgID IN (select pilgID from pilgrimage where pilgName = "Kamakhya Temple");
+
+
+show tables;
+desc feedback;
+
+select * from feedback;
 
 
 

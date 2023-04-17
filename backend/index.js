@@ -251,6 +251,7 @@ app.get('/priestAllocate', function(req, res){
 });
 // check if priest already exists //
 app.get('/priestexists', (req, res) => {
+    console.log(req.query);
     const orderid = req.query.orderID;
     //console.log(orderid);
     const qry='SELECT priName FROM orders WHERE orderID =?';
@@ -267,6 +268,7 @@ app.get('/priestexists', (req, res) => {
 // update the priest in order tracking if doest not exists //
 
 app.get('/priestupdate',(req, res)=>{
+    console.log(req.query);
     const orderid = req.query.orderID;
     const name = req.query.priName;
     const qry = 'UPDATE orders SET priName =? WHERE orderID = ?'
@@ -391,6 +393,46 @@ app.get('/userprofile/:id', (req,res)=>
     });
 
 })
+// check feedback //
+
+app.get('/checkfeedback/:id', (req, res) => {
+
+    const orderID =  req.params.id;
+    const qry = "select * from feedback where orderID = ?";
+    mysql.query(qry, [orderID],(err, results) => {
+        if (err) throw err
+        else {
+            res.send(results);
+        }
+    });
+
+
+});
+
+// add feedback into feedback table //
+app.post('/addFeed', (req, res) => {
+    console.log(req.body);
+    const id = req.body.orderID;
+    const feed = req.body.feedCont;
+    const custID =req.body.custID;
+
+    const qry = 'INSERT INTO feedback (feedContent, orderID, custID) VALUES (?,?,?)';
+    mysql.query(qry, [feed,id,custID],(err, results) => {
+        if (err) throw err
+        else {
+            console.log('>>>>>> feedback entered');
+            if(results.affectedRows=1)
+            {
+                res.json({auth:true,status:"Success"})
+            }
+            else{
+                res.json({auth:false,status:"Database Error"})
+            }
+        }
+    });
+
+    
+});
 
 
 

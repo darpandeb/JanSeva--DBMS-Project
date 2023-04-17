@@ -2,12 +2,34 @@ import React, { useEffect, useState } from 'react'
 import Navigation from './Navigation';
 import '../styles/ViewOrders.css';
 import { Link, useNavigate } from 'react-router-dom';
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
 
 const now = new Date();
 const year = now.getFullYear();
 const custID = localStorage.getItem('ltk');
 const orderurl = `http://localhost:8000/vieworders/${custID}`;
+const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+};
 
+const buttonstyle = 
+{
+    bgcolor : "#F7C04A",
+    color : "#675D50",
+    padding : "10px",
+}
+
+const MySwal = withReactContent(Swal); 
 
 export default function ViewOrders() {
 
@@ -51,6 +73,29 @@ export default function ViewOrders() {
 
     }
 
+    // check whether that order has feedback entry or not //
+    function checkfeedback(orderid)
+    {
+        const feedbackurl = `http://localhost:8000/checkfeedback/${orderid}`;
+        fetch(feedbackurl,{method:'GET'} )
+            .then((res) => res.json())
+            .then((data) => {
+                if(data.length==0)
+                {
+                     nav(`/addFeedback/${orderid}`)
+                }
+                else{
+                    MySwal.fire({
+                        icon: "success",
+                        title: "Feedback already Submitted",
+                        time: 4000,
+                      });
+                }
+
+            })
+
+    }
+
     const renderorders = (data) =>{
         if(data.length > 0){
             return data.map((item) => { 
@@ -76,7 +121,7 @@ export default function ViewOrders() {
                     Rs {item.amount}
                     </td>
                     {(item.orderStatus==='delivered') ? (<td>
-                        <button className='btn btn-warning'>Feedback</button>
+                        <button className='btn btn-warning' onClick={e=>checkfeedback(item.orderID)}>Feedback</button>
                     </td>): (item.orderStatus==='cancelled')? (<td style={{'color':'red','fontWeight':'800'}}>Order cancelled</td>):(<td style={{'display':'flex'}}><button className='btn btn-success' onClick={e=>handleview(item.orderID,item.pilgName)}>Track</button>&nbsp;
                     <button className='btn btn-danger'onClick={e=>handlecancel(item.orderID)}>Cancel</button>
                     </td>)}

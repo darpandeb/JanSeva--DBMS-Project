@@ -29,7 +29,7 @@ function validateEmailAndPassword(name, age, gender, email, address,pin,password
   {
     return 'invalid phone';
   }
-  if((parseInt(age)<0 && parseInt(age)>100)||(parseInt(age)==NaN))
+  if((parseInt(age)<0 || parseInt(age)>100)||(parseInt(age)==NaN))
   {
     return 'invalid age';
   }
