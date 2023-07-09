@@ -11,3 +11,6 @@ JanSeva is an innovative online web platform that allows individuals to connect 
 5. Tracking Status module
 6. Feedback module
 
+## ScreenShots
+![Landing](https://ibb.co/cbMb4dy)
+
